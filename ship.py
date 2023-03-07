@@ -24,9 +24,9 @@ class Ship:
         
     def update(self):
         """Actualizar la posicion de la nave basado en la bandera"""
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
             self.x -=self.settings.ship_speed
         #Actualizar rect objeto de self.x
         self.rect.x=self.x
