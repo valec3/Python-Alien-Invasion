@@ -1,8 +1,8 @@
 import sys 
-
 import pygame
 from studs import Settings
 from ship import Ship
+from blet import Bullet
 class AlienInvasion:
     """Clase general para gestionar los activos y el comportamiento del juego."""
     def __init__(self):
@@ -16,12 +16,14 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
 
         self.ship =Ship(self)
+        self.bullets = pygame.sprite.Group()
         
     def run_game(self):
         """Comenzar el bucle principal para el juego"""
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
             self.clock.tick(60)
             
