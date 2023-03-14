@@ -21,10 +21,10 @@ class AlienInvasion:
     def run_game(self):
         """Comenzar el bucle principal para el juego"""
         while True:
-            self._check_events()
-            self.ship.update()
-            self.bullets.update()
-            self._update_screen()
+            self._check_events()#revisa los eventos
+            self.ship.update()#actualiza la posicion de la nave
+            self._update_bullets()#actualiza la posicion de las balas
+            self._update_screen()#dibujasmos una nueva pantalla con las posiciones actuales
             self.clock.tick(60)
             
     def _check_events(self):
@@ -59,9 +59,21 @@ class AlienInvasion:
             self.ship.moving_left =False
     
     def _fire_bullet(self):
-        """Create a new bullet and add it to the bullets group."""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        """Crear una nueva bala y añadirla al grupo de balas."""
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+        
+    
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets."""
+        # Update bullet positions.
+        self.bullets.update()
+        
+        #Obtener rid de las balas que han pasado el limite
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
     
     def _update_screen(self):
         """Actualizar imagenes en la pantalla, y voltear a la nueva."""
